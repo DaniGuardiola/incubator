@@ -4,6 +4,8 @@
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 @endsection
 
+{{ Log::debug("Hi there!") }}
+
 @section('content')
 <div class="container-fluid" style="margin-top: 64px;">
 	<div class="row">
