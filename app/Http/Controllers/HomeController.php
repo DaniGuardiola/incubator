@@ -11,15 +11,14 @@ class HomeController extends Controller {
 	| are authenticated. Of course, you are free to change or remove the
 	| controller as you wish. It is just here to get your app started!
 	|
-	*/
+	 */
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->middleware('auth');
 	}
 
@@ -28,8 +27,8 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
+		Log::debug("Hi there!");
 		return view('home');
 	}
 
