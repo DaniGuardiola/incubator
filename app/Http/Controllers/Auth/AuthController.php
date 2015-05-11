@@ -44,8 +44,6 @@ class AuthController extends Controller {
 		$field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 		$request->merge([$field => $request->input('login')]);
 
-		Log::debug("Hi there!");
-
 		if ($this->auth->attempt($request->only($field, 'password'))) {
 			return redirect('/');
 		}

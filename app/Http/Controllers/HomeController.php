@@ -28,7 +28,6 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		Log::debug("Hi there!");
 		return view('home');
 	}
 
