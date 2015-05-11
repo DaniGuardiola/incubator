@@ -1,7 +1,11 @@
 @extends('app')
 
+@section('css')
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 64px;">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
@@ -17,6 +21,10 @@
 							</ul>
 						</div>
 					@endif
+
+					<div class="alert alert-info">
+						<p>Para iniciar sesión, escribe tu nombre de usuario en minúsculas y añade "@email.com". Por ejemplo, si tu nombre de usuario es "pepe", sería "pepe@email.com".</p>
+					</div>
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -48,8 +56,6 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">Login</button>
-
-								<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
 							</div>
 						</div>
 					</form>
