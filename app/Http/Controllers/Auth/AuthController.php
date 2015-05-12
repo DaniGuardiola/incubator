@@ -49,7 +49,7 @@ class AuthController extends Controller {
 		}
 
 		return redirect('/login')->withErrors([
-			'error' => 'These credentials do not match our records.',
+			'error' => 'Los datos son incorrectos.',
 		]);
 	}
 }

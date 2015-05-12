@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Movement;
+
 class HomeController extends Controller {
 
 	/*
@@ -28,7 +30,16 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		return view('home');
+		$movements = Movement::all();
+		$args = [
+			"movements" => $movements,
+		];
+		return view('home')->with($args);
+	}
+
+	public function getMovement($id) {
+		$movement = Movement::find($id);
+		return $movement;
 	}
 
 }

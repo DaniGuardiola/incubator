@@ -6,8 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Laravel</title>
 
+	<?php Log::debug(action('HomeController@getMovement'))?>
+
 	@yield('css')
 	<link href="{{ asset('/paperkit-min/paperkit.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body md-layout>
 	<md-toolbar md-color="cyan" md-shadow="shadow-1">
@@ -17,10 +20,23 @@
 			@else
 			<md-icon></md-icon>
 			@endif
-			<md-text>Incubator</md-text>
+			<md-text>Incubator - <span md-font-color="cyan-100">
+			@yield('title')
+			</span>
+			</md-text>
 			<md-space></md-space>
 			@if (!Auth::guest())
-				<md-text>{{ Auth::user()->name }}</md-text>
+<?php
+$msg = [
+	"Bienvenido de nuevo, %s",
+	"Sayonara %s",
+	"¡Hey, %s!",
+	"Hola %s",
+	"¿Cómo va eso %s?",
+];
+$msg = $msg[mt_rand(0, count($msg) - 1)];
+?>
+				<md-text>{{ sprintf($msg, Auth::user()->name) }}</md-text>
 				<md-icon-button md-image="icon: cancel" md-action="link: {{ url('/auth/logout') }}"></md-icon-button>
 			@endif
 		</md-row>
@@ -28,8 +44,8 @@
 	<md-sidemenu>
 		<md-list md-action="link: data-action">
 			<md-tile data-action="{{{ url('home') }}}">
-				<md-icon md-image="icon: home"></md-icon>
-				<md-text>Home</md-text>
+				<md-icon md-image="icon: run"></md-icon>
+				<md-text>Movimientos</md-text>
 			</md-tile>
 		</md-list>
 	</md-sidemenu>
