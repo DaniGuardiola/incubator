@@ -5,15 +5,14 @@
 @endsection
 
 @section('title')
-Inicio de sesión
+Bienvenido
 @endsection
 
 @section('content')
 <div class="container-fluid" style="margin-top: 64px;">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Login</div>
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-default" md-shadow="shadow-1">
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -27,41 +26,31 @@ Inicio de sesión
 					@endif
 
 					<div class="alert alert-info">
-						<p>Para iniciar sesión, escribe tu nombre de usuario en minúsculas y añade "@email.com". Por ejemplo, si tu nombre de usuario es "pepe", sería "pepe@email.com".</p>
+						<p>Para iniciar sesión, escribe tu nombre de usuario en minúsculas y añade "@email.com". Por ejemplo, si tu nombre de usuario es "pepe", escribe "pepe@email.com".</p>
 					</div>
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
+					<form md-layout role="form" method="POST" action="{{ url('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Email</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Contraseña</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember">Recordarme
-									</label>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Iniciar sesión</button>
-							</div>
-						</div>
+						<md-row>
+							<md-tile md-width="c1">
+								<md-input type="email" style="width: 100%;" placeholder="Email" name="email" value="{{ old('email') }}"></md-input>
+							</md-tile>
+						</md-row>
+						<md-row>
+							<md-tile md-width="c1">
+								<md-input type="password" style="width: 100%;" placeholder="Contraseña" name="password"></md-input>
+							</md-tile>
+						</md-row>
+						<md-row>
+							<md-tile md-width="c1">
+								<input type="checkbox" name="remember">Recordarme
+							</md-tile>
+						</md-row>
+						<md-row>
+							<md-tile md-width="c1">
+								<md-button md-buttontype="flat-light" md-action="submit">Iniciar sesión</button>
+							</md-tile>
+						</md-row>
 					</form>
 				</div>
 			</div>

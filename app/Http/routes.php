@@ -13,12 +13,18 @@
 
 View::addExtension('js', 'php');
 
-Route::get('/', 'HomeController@index');
+Route::get('movimientos', 'HomeController@index');
 
-Route::get('home', 'HomeController@index');
+Route::get('home', function () {
+	return Redirect::to('movimientos');
+});
+
+Route::get('/', function () {
+	return Redirect::to('movimientos');
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-	'home' => 'HomeController',
+	'movimientos' => 'HomeController',
 ]);

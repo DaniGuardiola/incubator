@@ -37,7 +37,7 @@ class HomeController extends Controller {
 		return view('home')->with($args);
 	}
 
-	public function getMovement($id) {
+	public function getData($id) {
 		$movement = Movement::find($id);
 		return $movement;
 	}

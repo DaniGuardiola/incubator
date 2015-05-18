@@ -4,9 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Laravel</title>
-
-	<?php Log::debug(action('HomeController@getMovement'))?>
+	<title>Limitless Incubator - @yield('title')</title>
 
 	@yield('css')
 	<link href="{{ asset('/paperkit-min/paperkit.css') }}" rel="stylesheet">
@@ -24,6 +22,7 @@
 			@yield('title')
 			</span>
 			</md-text>
+			@yield('toolbar')
 			<md-space></md-space>
 			@if (!Auth::guest())
 <?php

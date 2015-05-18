@@ -13,7 +13,7 @@ class CreateMovementsTable extends Migration {
 	public function up() {
 		Schema::create('movements', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('slug');
+			$table->string('slug')->unique();
 			$table->string('name');
 			$table->string('video_id');
 			$table->string('img_id');
