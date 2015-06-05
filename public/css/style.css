@@ -2,6 +2,16 @@
   display: none;
 }
 
+md-tile {
+	position: relative;
+}
+
 *:hover>.show-parent-hover {
   display: initial;
+  position: absolute;
+  right: 0;
+}
+
+md-input,md-input>input {
+	width: 100%;
 }

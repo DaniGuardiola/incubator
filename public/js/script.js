@@ -34,10 +34,28 @@ var help = {
         console.log("This will show help with this text: " + what);
         alert(what);
     },
+    slug: function(){
+        help.generic("El identificador del movimiento, NO puede contener espacios, mayúsculas ni tildes, las palabras se separan por guiones. Por ejemplo: \"doble-backflip\".");
+    },
+    category: function(){
+        help.generic("Elije la categoría que corresponda para este movimiento");
+    },
     name: function(){
         help.generic("El nombre del movimiento, puede contener espacios, mayúsculas y tildes. Por ejemplo: \"Doble backflip\".");
     },
-    slug: function(){
-        help.generic("El id del movimiento, NO puede contener espacios, mayúsculas ni tildes, las palabras se separan por guiones. Por ejemplo: \"doble-backflip\".");
-    }
+    name_variants: function(){
+        help.generic("Las variantes del nombre separadas por comas (no dejes espacio detrás de la coma). Por ejemplo: \"Primera variación,Variante segunda,Tercer sinónimo\".");
+    },
+    equals: function(){
+        help.generic("Los movimientos equivalentes de otras disciplinas (por ejemplo, el backflip aparece en street stunts y en tricking)");
+    },
+    tags: function(){
+        help.generic("Las etiquetas separadas por comas. Por ejemplo: \"Carpado,Plancha\". Es importante que leas la página de ayuda antes de editar este campo.");
+    },
+    history: function(){
+        help.generic("La historia del movimiento. Sigue las guías de la página de ayuda para redactarla correctamente.");
+    },
+    technique_description_text: function(){
+        help.generic("La breve explicación técnica que luego servirá de guión para el vídeo explicativo (además de mostrarse también en formato texto). Sigue las guías de la página de ayuda para redactarla correctamente.");
+    },
 }

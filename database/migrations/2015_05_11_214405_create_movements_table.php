@@ -14,13 +14,17 @@ class CreateMovementsTable extends Migration {
 		Schema::create('movements', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('slug')->unique();
+			$table->string('category_id');
 			$table->string('name');
+			$table->string('name_variants');
+			$table->string('equals');
+			$table->string('tags');
+			$table->longText('history');
+			$table->longText('technique_description_text');
 			$table->string('video_id');
 			$table->string('img_id');
 			$table->string('gif_id');
 			$table->string('discipline_id');
-			$table->string('equals');
-			$table->string('category');
 			$table->string('info');
 			$table->string('mistakes');
 			$table->string('technique');

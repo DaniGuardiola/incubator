@@ -30,9 +30,13 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		$movements = Movement::all();
+		$all = [
+			"parkour" => Movement::where("discipline_id", "=", 1)->get(),
+			"streetstunts" => Movement::where("discipline_id", "=", 2)->get(),
+			"tricking" => Movement::where("discipline_id", "=", 3)->get(),
+		];
 		$args = [
-			"movements" => $movements,
+			"all" => $all,
 		];
 		return view('home')->with($args);
 	}
@@ -40,6 +44,14 @@ class HomeController extends Controller {
 	public function getData($id) {
 		$movement = Movement::find($id);
 		return $movement;
+	}
+
+	public function getMovement($id) {
+		$movement = $this->getData($id);
+		$args = [
+			"movement" => $movement,
+		];
+		return View::make("movement")->with($args);
 	}
 
 }
