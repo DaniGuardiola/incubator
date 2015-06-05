@@ -2,9 +2,12 @@ var paperkit = new Paperkit();
 paperkit.init();
 
 function movementListHandler(el) {
-	var uri = "home/movement/" + el.getAttribute("data-id");
+	var uri = "movimientos/movement/" + el.getAttribute("data-id");
     ajaxCall("GET", uri, false, true, function(response) {
-    	console.log(response);
+        var container = el.parentNode.parentNode.parentNode.querySelector(".movement-form");
+        var form = response.target.responseText;
+        container.innerHTML = form;
+        paperkit.initElement(container);
     });
 }
 
@@ -50,12 +53,21 @@ var help = {
         help.generic("Los movimientos equivalentes de otras disciplinas (por ejemplo, el backflip aparece en street stunts y en tricking)");
     },
     tags: function(){
-        help.generic("Las etiquetas separadas por comas. Por ejemplo: \"Carpado,Plancha\". Es importante que leas la página de ayuda antes de editar este campo.");
+        help.generic("Las etiquetas separadas por comas. Por ejemplo: \"Carpado,Plancha\". Consulta la guía para completarlo correctamente.");
     },
     history: function(){
-        help.generic("La historia del movimiento. Sigue las guías de la página de ayuda para redactarla correctamente.");
+        help.generic("La historia del movimiento. Consulta la guía para completarlo correctamente.");
     },
     technique_description_text: function(){
-        help.generic("La breve explicación técnica que luego servirá de guión para el vídeo explicativo (además de mostrarse también en formato texto). Sigue las guías de la página de ayuda para redactarla correctamente.");
+        help.generic("La breve explicación técnica que también servirá de guión para el vídeo explicativo (además de mostrarse también en formato texto). Consulta la guía para completarlo correctamente.");
+    },
+    steps: function(){
+        help.generic("Los pasos del movimiento. Consulta la guía para completarlo correctamente.");
+    },
+    advice: function(){
+        help.generic("Los consejos y errores comunes de este movimiento. Consulta la guía para completarlo correctamente.");
+    },
+    progressions: function(){
+        help.generic("Las progresiones para el correcto aprendizaje del movimiento. Consulta la guía para completarlo correctamente.");
     },
 }

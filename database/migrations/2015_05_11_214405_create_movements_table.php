@@ -21,15 +21,15 @@ class CreateMovementsTable extends Migration {
 			$table->string('tags');
 			$table->longText('history');
 			$table->longText('technique_description_text');
-			$table->string('video_id');
-			$table->string('img_id');
+			$table->string('steps');
+			$table->string('advice');
+			$table->string('progressions');
 			$table->string('gif_id');
 			$table->string('discipline_id');
 			$table->string('info');
 			$table->string('mistakes');
 			$table->string('technique');
 			$table->string('requirements');
-			$table->string('progressions');
 			$table->string('derived_from');
 			$table->timestamps();
 		});

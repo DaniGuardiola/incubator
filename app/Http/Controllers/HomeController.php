@@ -51,7 +51,7 @@ class HomeController extends Controller {
 		$args = [
 			"movement" => $movement,
 		];
-		return View::make("movement")->with($args);
+		return \View::make("movement")->with($args);
 	}
 
 }

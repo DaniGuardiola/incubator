@@ -22,7 +22,7 @@
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.name"></md-icon-button>
 		</md-tile>
 		<md-tile md-width="c1">
-			<md-input type="text" name="name_variants" placeholder="Variantes de nombre" value="{{{ implode(',', json_decode($movement->name_variants)) }}}"></md-input>
+			<md-input type="text" name="name_variants" placeholder="Variantes de nombre" value="{{{ $movement->name_variants ? implode(',', json_decode($movement->name_variants)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.name_variants"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -60,23 +60,40 @@
 			<span md-typo="subhead">Pasos</span>
 			<md-space></md-space>
 			<md-icon-button md-image="icon: add"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.steps"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-row>
 		<md-tile md-width="c1">
 			<md-list style="width: 100%;">
+<?php
+$stepcount = 1;
+$movement->steps = $movement->steps ? json_decode($movement->steps) : [];
+?>
+			@foreach($movement->steps as $value)
+<?php
+if ($stepcount === 1) {
+	$stepcountstring = "one";
+} else if ($stepcount === 2) {
+	$stepcountstring = "two";
+} else if ($stepcount === 3) {
+	$stepcountstring = "3";
+} else if ($stepcount === 4) {
+	$stepcountstring = "4";
+} else if ($stepcount === 5) {
+	$stepcountstring = "5";
+} else {
+	$stepcountstring = "6";
+}
+$stepcount = $stepcount + 1;
+?>
 				<md-tile>
 					<md-icon md-image="icon: drag"></md-icon>
-					<md-icon md-image="icon: looks_one"></md-icon>
-					<md-input style="flex: 1;" type="text" value="Pon las piernas de forma que X"></md-input>
+					<md-icon md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
+					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
 					<md-icon-button md-image="icon: delete"></md-icon-button>
 				</md-tile>
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-icon md-image="icon: looks_two"></md-icon>
-					<md-input style="flex: 1;" type="text" value="Impulsate hacia Y"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
+			@endforeach
 			</md-list>
 		</md-tile>
 	</md-row>
@@ -85,21 +102,22 @@
 			<span md-typo="subhead">Consejos y errores comunes</span>
 			<md-space></md-space>
 			<md-icon-button md-image="icon: add"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.advice"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-row>
 		<md-tile md-width="c1">
 			<md-list style="width: 100%;">
+<?php
+$movement->advice = $movement->advice ? json_decode($movement->advice) : [];
+?>
+			@foreach($movement->advice as $value)
 				<md-tile>
 					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="No te caigas que no tenemos seguro"></md-input>
+					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
 					<md-icon-button md-image="icon: delete"></md-icon-button>
 				</md-tile>
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="No es aconsejable saltar policías"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
+			@endforeach
 			</md-list>
 		</md-tile>
 	</md-row>
@@ -108,21 +126,22 @@
 			<span md-typo="subhead">Progresiones</span>
 			<md-space></md-space>
 			<md-icon-button md-image="icon: add"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-row>
 		<md-tile md-width="c1">
 			<md-list style="width: 100%;">
+<?php
+$movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
+?>
+			@foreach($movement->progressions as $value)
 				<md-tile>
 					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="Primero haz esto"></md-input>
+					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
 					<md-icon-button md-image="icon: delete"></md-icon-button>
 				</md-tile>
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="Y luego esto otro"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
+			@endforeach
 			</md-list>
 		</md-tile>
 	</md-row>
