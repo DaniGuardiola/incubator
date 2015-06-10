@@ -33,14 +33,16 @@ $equals = [];
 if ($movement->equals) {
 	foreach (json_decode($movement->equals) as $key => $value) {
 		$thisMovement = App\Models\Movement::find($value);
-		if ($thisMovement->discipline_id == 1) {
-			$discipline = "[Parkour]";
-		} else if ($thisMovement->discipline_id == 2) {
-			$discipline = "[Street Stunts]";
-		} else if ($thisMovement->discipline_id == 3) {
-			$discipline = "[Tricking]";
+		if (!is_null($thisMovement)) {
+			if ($thisMovement->discipline_id == 1) {
+				$discipline = "[Parkour]";
+			} else if ($thisMovement->discipline_id == 2) {
+				$discipline = "[Street Stunts]";
+			} else if ($thisMovement->discipline_id == 3) {
+				$discipline = "[Tricking]";
+			}
+			$equals[] = $discipline . " " . $thisMovement->name;
 		}
-		$equals[] = $discipline . " " . $thisMovement->name;
 	}
 }
 ?>
