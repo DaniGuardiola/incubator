@@ -41,6 +41,10 @@ class HomeController extends Controller {
 		return view('home')->with($args);
 	}
 
+	public function guide() {
+		return view('guide');
+	}
+
 	public function getData($id) {
 		$movement = Movement::find($id);
 		return $movement;
@@ -52,6 +56,25 @@ class HomeController extends Controller {
 			"movement" => $movement,
 		];
 		return \View::make("movement")->with($args);
+	}
+
+	public function postSaveMovement($id) {
+		$movement = $this->getData($id);
+		$rawData = \Input::all();
+		\Log::debug(print_r($rawData, true));
+
+		$data = [
+			"slug" => $rawData["slug"],
+			"category_id" => $rawData["category_id"],
+			"name" => $rawData["name"],
+			"name_variants" => explode(",", $rawData["name_variants"]),
+			"equals" => explode(",", $rawData["equals"]),
+			"tags" => explode(",", $rawData["tags"]),
+			"history" => $rawData["history"],
+			"technique_description_text" => $rawData["technique_description_text"],
+		];
+
+		\Log::debug(print_r($data, true));
 	}
 
 }

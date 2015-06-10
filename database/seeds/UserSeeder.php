@@ -83,5 +83,33 @@ class UserSeeder extends Seeder {
 			'email' => 'trazdv@email.com',
 			'password' => Hash::make('chiwaca'),
 		]);
+
+		User::create([
+			'name' => 'Alberto',
+			'status' => 'normal',
+			'email' => 'albertorres@email.com',
+			'password' => Hash::make('shoder22'),
+		]);
+
+		User::create([
+			'name' => 'Plaza',
+			'status' => 'normal',
+			'email' => 'danielplaza@email.com',
+			'password' => Hash::make('contraseña'),
+		]);
+
+		User::create([
+			'name' => 'Vento',
+			'status' => 'normal',
+			'email' => 'vento@email.com',
+			'password' => Hash::make('vento01'),
+		]);
+
+		User::create([
+			'name' => 'Jorge',
+			'status' => 'normal',
+			'email' => 'yorspk@email.com',
+			'password' => Hash::make('jorgeparkour'),
+		]);
 	}
 }

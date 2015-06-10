@@ -13,6 +13,7 @@ class CreateMovementsTable extends Migration {
 	public function up() {
 		Schema::create('movements', function (Blueprint $table) {
 			$table->increments('id');
+			$table->string('discipline_id');
 			$table->string('slug')->unique();
 			$table->string('category_id');
 			$table->string('name');
@@ -24,13 +25,9 @@ class CreateMovementsTable extends Migration {
 			$table->string('steps');
 			$table->string('advice');
 			$table->string('progressions');
-			$table->string('gif_id');
-			$table->string('discipline_id');
-			$table->string('info');
-			$table->string('mistakes');
-			$table->string('technique');
 			$table->string('requirements');
 			$table->string('derived_from');
+			$table->string('variations');
 			$table->timestamps();
 		});
 	}

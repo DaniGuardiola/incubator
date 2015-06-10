@@ -13,7 +13,10 @@ class MovementSeeder extends Seeder {
 			'category_id' => '',
 			'name' => 'Gato',
 			'name_variants' => json_encode(["Monkey", "Kong"]),
-			'equals' => '',
+			'equals' => json_encode([
+				24,
+				25,
+			]),
 			'tags' => 'Urbano,Obstáculos',
 			'history' => 'El gato es un movimiento originado en la época de la inquisición y su inventor fue Pocholo.
 Últimamente los veganos están manifestándose globalmente contra la crueldad animal ejercida en el parkour con este movimiento.',

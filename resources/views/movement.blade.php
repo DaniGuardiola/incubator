@@ -1,4 +1,4 @@
-<form md-layout md-color="white" md-shadow="shadow-1" style="border-radius: 2px;">
+<form class="movement" data-csrf="<?php echo csrf_token();?>" data-id="{{{ $movement->id }}}" md-layout md-color="white" md-shadow="shadow-1" style="border-radius: 2px;">
 	<md-row>
 		<md-tile md-width="c1">
 			<span md-typo="headline" md-font-color="cyan">Información</span>
@@ -28,7 +28,23 @@
 	</md-row>
 	<md-row>
 		<md-tile md-width="c1">
-			<md-input disabled type="text" name="equals" placeholder="Equivalentes" value="{{{ $movement->equals }}}"></md-input>
+<?php
+$equals = [];
+if ($movement->equals) {
+	foreach (json_decode($movement->equals) as $key => $value) {
+		$thisMovement = App\Models\Movement::find($value);
+		if ($thisMovement->discipline_id == 1) {
+			$discipline = "[Parkour]";
+		} else if ($thisMovement->discipline_id == 2) {
+			$discipline = "[Street Stunts]";
+		} else if ($thisMovement->discipline_id == 3) {
+			$discipline = "[Tricking]";
+		}
+		$equals[] = $discipline . " " . $thisMovement->name;
+	}
+}
+?>
+			<md-input disabled type="text" name="equals" placeholder="Equivalentes" value="{{{ implode(', ', $equals) }}}" data-value="{{{ $movement->equals ? implode(',', json_decode($movement->equals)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.equals"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -143,6 +159,24 @@ $movement->progressions = $movement->progressions ? json_decode($movement->progr
 				</md-tile>
 			@endforeach
 			</md-list>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ $movement->requirements }}}"></md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.requirements"></md-icon-button>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input disabled type="text" name="derived_from" placeholder="Derivado de..." value="{{{ $movement->derived_from }}}"></md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.derived_from"></md-icon-button>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input disabled type="text" name="variations" placeholder="Variaciones" value="{{{ $movement->variations }}}"></md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.variations"></md-icon-button>
 		</md-tile>
 	</md-row>
 </form>

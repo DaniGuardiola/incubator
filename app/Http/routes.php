@@ -14,6 +14,8 @@
 View::addExtension('js', 'php');
 
 Route::get('movimientos', 'HomeController@index');
+Route::get('guia', 'HomeController@guide');
+Route::post('movimientos/save-movement', 'HomeController@postSaveMovement');
 
 Route::get('home', function () {
 	return Redirect::to('movimientos');

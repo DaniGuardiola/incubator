@@ -42,7 +42,7 @@ $msg = $msg[mt_rand(0, count($msg) - 1)];
 	</md-toolbar>
 	<md-sidemenu>
 		<md-list md-action="link: data-action">
-			<md-tile data-action="">
+			<md-tile data-action="{{{ url('guia') }}}">
 				<md-icon md-image="icon: help"></md-icon>
 				<md-text>Guía y ayuda</md-text>
 			</md-tile>
@@ -59,7 +59,6 @@ $msg = $msg[mt_rand(0, count($msg) - 1)];
 	<md-content md-color="grey-200">
 	@yield('content')
 	</md-content>
-	<md-fab md-image="icon: done" md-color="green" md-fill="white" md-shadow="shadow-1"></md-fab>
 
 	<!-- Scripts -->
 	<script src="{{ asset('/paperkit-min/paperkit.js') }}"></script>
