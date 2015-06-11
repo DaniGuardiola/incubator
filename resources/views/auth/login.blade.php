@@ -26,24 +26,25 @@ Bienvenido
 					@endif
 
 					<div class="alert alert-info">
-						<p>Para iniciar sesión, escribe tu nombre de usuario en minúsculas y añade "@email.com". Por ejemplo, si tu nombre de usuario es "pepe", escribe "pepe@email.com".</p>
+						<p>¡Bienvenido de nuevo! :)<br>NOTA: si quieres una cuenta para poder colaborar en la incubadora de Limitless, mándame un email a contacto@daniguardiola.me indicando tus conocimientos.</p>
 					</div>
 
 					<form md-layout role="form" method="POST" action="{{ url('/auth/login') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<md-row>
 							<md-tile md-width="c1">
-								<md-input type="email" style="width: 100%;" placeholder="Email" name="email" value="{{ old('email') }}"></md-input>
+								<md-input id="emailfield" type="text" style="width: 100%;" placeholder="Email" name="email-false" value=""></md-input>
 							</md-tile>
 						</md-row>
+						<script type="text/javascript">
+						document.getElementById('emailfield').addEventListener("change", function(e){
+							document.getElementById("trueemail").value = e.currentTarget.value + "@email.com";
+						});
+						</script>
+						<input id="trueemail" name="email" type="hidden" value="">
 						<md-row>
 							<md-tile md-width="c1">
 								<md-input type="password" style="width: 100%;" placeholder="Contraseña" name="password"></md-input>
-							</md-tile>
-						</md-row>
-						<md-row>
-							<md-tile md-width="c1">
-								<input type="checkbox" name="remember">Recordarme
 							</md-tile>
 						</md-row>
 						<md-row>

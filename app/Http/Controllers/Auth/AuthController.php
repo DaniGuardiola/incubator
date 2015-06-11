@@ -30,7 +30,6 @@ class AuthController extends Controller {
 	public function __construct(Guard $auth, Registrar $registrar) {
 		$this->auth = $auth;
 		$this->registrar = $registrar;
-
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
@@ -40,6 +39,7 @@ class AuthController extends Controller {
 			'password' => 'required',
 		];
 	}
+
 	public function login(LoginRequest $request) {
 		$field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 		$request->merge([$field => $request->input('login')]);

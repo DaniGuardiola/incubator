@@ -64,7 +64,7 @@ var help = {
         help.generic("La historia del movimiento. Consulta la guía para completarlo correctamente.");
     },
     technique_description_text: function() {
-        help.generic("La breve explicación técnica que también servirá de guión para el vídeo explicativo (además de mostrarse también en formato texto). Consulta la guía para completarlo correctamente.");
+        help.generic("La breve explicación técnica que también servirá de guión para el vídeo explicativo (además de mostrarse en formato texto). Consulta la guía para completarlo correctamente.");
     },
     steps: function() {
         help.generic("Los pasos del movimiento. Consulta la guía para completarlo correctamente.");
@@ -74,6 +74,15 @@ var help = {
     },
     progressions: function() {
         help.generic("Las progresiones para el correcto aprendizaje del movimiento. Consulta la guía para completarlo correctamente.");
+    },
+    requirements: function() {
+        help.generic("Los requisitos para aprender el movimiento. Consulta la guía para completarlo correctamente.");
+    },
+    derived_from: function() {
+        help.generic("El movimiento o movimientos de los cuales deriva este movimiento. Consulta la guía para completarlo correctamente.");
+    },
+    variations: function() {
+        help.generic("Las variaciones del movimiento. Consulta la guía para completarlo correctamente.");
     },
 }
 

@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-Guía
+Guía y ayuda
 @endsection
 
 @section('content')

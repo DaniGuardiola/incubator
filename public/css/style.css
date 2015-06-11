@@ -15,3 +15,7 @@ md-tile {
 md-input,md-input>input {
 	width: 100%;
 }
+
+.movement-form md-tile>md-icon,.movement-form md-tile>md-input + md-icon-button {
+  margin-top: 13px;
+}
