@@ -3,6 +3,10 @@ paperkit.init();
 
 var currentTab = "parkour";
 
+window.addEventListener("load", function() {
+    addInputsClickListener();
+});
+
 function movementListHandler(el) {
     var uri = "movimientos/movement/" + el.getAttribute("data-id");
     ajaxCall("GET", uri, false, true, function(response) {
@@ -17,7 +21,7 @@ function ajaxCall(method, uri, parameters, async, callback, csrf) {
     method = method || "GET";
     async = async || true;
 
-    var xhr = new XMLHttpRequest;
+    var xhr = new XMLHttpRequest();
     xhr.open(method, uri, async);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
@@ -130,4 +134,49 @@ function tabHandler(el, n) {
     } else if (n === 2) {
         currentTab = "tricking";
     }
+}
+
+// FORM
+
+// Listener attacher
+function addInputsClickListener() {
+    [].forEach.call(
+        document.querySelectorAll('.input-movement'),
+        function(input) {
+            input.addEventListener("click", inputMovementClick);
+        });
+}
+
+// Clicks
+function inputMovementClick(event) {
+    var input = event.currentTarget;
+
+    paperkit.greylayer.show();
+
+    var morphHelper = document.createElement("div");
+    morphHelper.id = "morph-helper";
+    morphHelper.style.opacity = "0";
+    morphHelper.style.height = "700px";
+    morphHelper.style.width = "580px";
+    morphHelper.style.backgroundColor = "white";
+    morphHelper.style.position = "fixed";
+    morphHelper.style.top = "50%";
+    morphHelper.style.left = "50%";
+    morphHelper.style.transform = "translate(-50%, -50%)";
+    document.body.appendChild(morphHelper);
+
+    transition.morph(input, morphHelper, function(container) {
+        morphHelper.parentNode.removeChild(morphHelper);
+        var uri = "movimientos/list";
+        ajaxCall("GET", uri, false, true, function(response) {
+            var view = response.target.responseText;
+            container.innerHTML = view;
+            paperkit.initElement(container);
+        });
+    });
+}
+
+function closeMorph() {
+    paperkit.greylayer.hide();
+    transition.morphBack();
 }

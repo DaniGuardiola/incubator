@@ -58,6 +58,18 @@ class HomeController extends Controller {
 		return \View::make("movement")->with($args);
 	}
 
+	public function getList() {
+		$movements = [
+			"parkour" => Movement::where("discipline_id", "=", 1)->get(),
+			"streetstunts" => Movement::where("discipline_id", "=", 2)->get(),
+			"tricking" => Movement::where("discipline_id", "=", 3)->get(),
+		];
+		$args = [
+			"movements" => $movements,
+		];
+		return \View::make("list")->with($args);
+	}
+
 	public function postSaveMovement($id) {
 		$movement = $this->getData($id);
 		$rawData = \Input::all();

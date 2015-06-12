@@ -27,7 +27,7 @@
 		</md-tile>
 	</md-row>
 	<md-row>
-		<md-tile md-width="c1">
+		<md-tile md-width="c1" style="cursor: pointer;">
 <?php
 $equals = [];
 if ($movement->equals) {
@@ -46,7 +46,7 @@ if ($movement->equals) {
 	}
 }
 ?>
-			<md-input disabled type="text" name="equals" placeholder="Equivalentes" value="{{{ implode(', ', $equals) }}}" data-value="{{{ $movement->equals ? implode(',', json_decode($movement->equals)) : "" }}}"></md-input>
+			<md-input class="input-movement" disabled type="text" name="equals" placeholder="Equivalentes" value="{{{ implode(', ', $equals) }}}" data-value="{{{ $movement->equals ? implode(',', json_decode($movement->equals)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.equals"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -164,20 +164,20 @@ $movement->progressions = $movement->progressions ? json_decode($movement->progr
 		</md-tile>
 	</md-row>
 	<md-row>
-		<md-tile md-width="c1">
-			<md-input disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ $movement->requirements }}}"></md-input>
+		<md-tile md-width="c1" style="cursor: pointer;">
+			<md-input class="input-movement" disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ $movement->requirements }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.requirements"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-row>
-		<md-tile md-width="c1">
-			<md-input disabled type="text" name="derived_from" placeholder="Derivado de..." value="{{{ $movement->derived_from }}}"></md-input>
+		<md-tile md-width="c1" style="cursor: pointer;">
+			<md-input class="input-movement" disabled type="text" name="derived_from" placeholder="Derivado de..." value="{{{ $movement->derived_from }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.derived_from"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-row>
-		<md-tile md-width="c1">
-			<md-input disabled type="text" name="variations" placeholder="Variaciones" value="{{{ $movement->variations }}}"></md-input>
+		<md-tile md-width="c1" style="cursor: pointer;">
+			<md-input class="input-movement" disabled type="text" name="variations" placeholder="Variaciones" value="{{{ $movement->variations }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.variations"></md-icon-button>
 		</md-tile>
 	</md-row>
