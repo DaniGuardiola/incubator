@@ -41,7 +41,9 @@ if ($movement->equals) {
 			} else if ($thisMovement->discipline_id == 3) {
 				$discipline = "[Tricking]";
 			}
-			$equals[] = $discipline . " " . $thisMovement->name;
+			$equals[] = $thisMovement->name . " " . $discipline;
+		} else {
+			$equals[] = "[Movimiento inexistente!]";
 		}
 	}
 }
@@ -81,9 +83,7 @@ if ($movement->equals) {
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.steps"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-row>
-		<md-tile md-width="c1">
-			<md-list style="width: 100%;">
+	<md-list style="width: 100%;">
 <?php
 $stepcount = 1;
 $movement->steps = $movement->steps ? json_decode($movement->steps) : [];
@@ -105,16 +105,14 @@ if ($stepcount === 1) {
 }
 $stepcount = $stepcount + 1;
 ?>
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-icon md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
-					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
-			@endforeach
-			</md-list>
+		<md-tile>
+			<md-icon md-image="icon: drag"></md-icon>
+			<md-icon md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
+			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
+			<md-icon-button md-image="icon: delete"></md-icon-button>
 		</md-tile>
-	</md-row>
+	@endforeach
+	</md-list>
 	<md-row>
 		<md-tile md-width="c1">
 			<span md-typo="subhead">Consejos y errores comunes</span>
@@ -123,22 +121,18 @@ $stepcount = $stepcount + 1;
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.advice"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-row>
-		<md-tile md-width="c1">
-			<md-list style="width: 100%;">
+	<md-list style="width: 100%;">
 <?php
 $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 ?>
 			@foreach($movement->advice as $value)
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
-			@endforeach
-			</md-list>
+		<md-tile>
+			<md-icon md-image="icon: drag"></md-icon>
+			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
+			<md-icon-button md-image="icon: delete"></md-icon-button>
 		</md-tile>
-	</md-row>
+	@endforeach
+	</md-list>
 	<md-row>
 		<md-tile md-width="c1">
 			<span md-typo="subhead">Progresiones</span>
@@ -147,37 +141,94 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-row>
-		<md-tile md-width="c1">
-			<md-list style="width: 100%;">
+	<md-list style="width: 100%;">
 <?php
 $movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
 ?>
 			@foreach($movement->progressions as $value)
-				<md-tile>
-					<md-icon md-image="icon: drag"></md-icon>
-					<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-					<md-icon-button md-image="icon: delete"></md-icon-button>
-				</md-tile>
-			@endforeach
-			</md-list>
+		<md-tile>
+			<md-icon md-image="icon: drag"></md-icon>
+			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
+			<md-icon-button md-image="icon: delete"></md-icon-button>
 		</md-tile>
-	</md-row>
+	@endforeach
+	</md-list>
+<?php
+$requirements = [];
+if ($movement->requirements) {
+	foreach (json_decode($movement->requirements) as $key => $value) {
+		$thisMovement = App\Models\Movement::find($value);
+		if (!is_null($thisMovement)) {
+			if ($thisMovement->discipline_id == 1) {
+				$discipline = "[Parkour]";
+			} else if ($thisMovement->discipline_id == 2) {
+				$discipline = "[Street Stunts]";
+			} else if ($thisMovement->discipline_id == 3) {
+				$discipline = "[Tricking]";
+			}
+			$requirements[] = $thisMovement->name . " " . $discipline;
+		} else {
+			$requirements[] = "[Movimiento inexistente!]";
+		}
+	}
+}
+?>
 	<md-row>
 		<md-tile md-width="c1" style="cursor: pointer;">
-			<md-input class="input-movement" disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ $movement->requirements }}}"></md-input>
+			<md-input class="input-movement" disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ implode(', ', $requirements) }}}" data-value="{{{ $movement->requirements ? implode(',', json_decode($movement->requirements)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.requirements"></md-icon-button>
 		</md-tile>
 	</md-row>
+<?php
+$derived_from = [];
+if ($movement->derived_from) {
+	foreach (json_decode($movement->derived_from) as $key => $value) {
+		$thisMovement = App\Models\Movement::find($value);
+		if (!is_null($thisMovement)) {
+			if ($thisMovement->discipline_id == 1) {
+				$discipline = "[Parkour]";
+			} else if ($thisMovement->discipline_id == 2) {
+				$discipline = "[Street Stunts]";
+			} else if ($thisMovement->discipline_id == 3) {
+				$discipline = "[Tricking]";
+			}
+			$derived_from[] = $thisMovement->name . " " . $discipline;
+		} else {
+			$derived_from[] = "[Movimiento inexistente!]";
+		}
+	}
+}
+?>
 	<md-row>
 		<md-tile md-width="c1" style="cursor: pointer;">
-			<md-input class="input-movement" disabled type="text" name="derived_from" placeholder="Derivado de..." value="{{{ $movement->derived_from }}}"></md-input>
+			<md-input class="input-movement" disabled type="text" name="derived_from" placeholder="Derivado de..." value="{{{ implode(', ', $derived_from) }}}" data-value="{{{ $movement->derived_from ? implode(',', json_decode($movement->derived_from)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.derived_from"></md-icon-button>
 		</md-tile>
 	</md-row>
+<?php
+$variations = [];
+if ($movement->variations) {
+	foreach (json_decode($movement->variations) as $key => $value) {
+		$thisMovement = App\Models\Movement::find($value);
+		if (!is_null($thisMovement)) {
+			if ($thisMovement->discipline_id == 1) {
+				$discipline = "[Parkour]";
+			} else if ($thisMovement->discipline_id == 2) {
+				$discipline = "[Street Stunts]";
+			} else if ($thisMovement->discipline_id == 3) {
+				$discipline = "[Tricking]";
+			}
+			$variations[] = $thisMovement->name . " " . $discipline;
+		} else {
+			$variations[] = "[Movimiento inexistente!]";
+		}
+	}
+}
+\Log::debug(print_r($variations, true));
+?>
 	<md-row>
 		<md-tile md-width="c1" style="cursor: pointer;">
-			<md-input class="input-movement" disabled type="text" name="variations" placeholder="Variaciones" value="{{{ $movement->variations }}}"></md-input>
+			<md-input class="input-movement" disabled type="text" name="variations" placeholder="Variaciones" value="{{{ implode(', ', $variations) }}}" data-value="{{{ $movement->variations ? implode(',', json_decode($movement->variations)) : "" }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.variations"></md-icon-button>
 		</md-tile>
 	</md-row>

@@ -7,13 +7,21 @@ window.addEventListener("load", function() {
     addInputsClickListener();
 });
 
-function movementListHandler(el) {
-    var uri = "movimientos/movement/" + el.getAttribute("data-id");
+function movementListHandler(tile) {
+    var last = tile.parentNode.querySelector("md-tile.open");
+    if (last) {
+        last.classList.remove('open');
+        last.style.borderLeft = "";
+    }
+    tile.classList.add('open');
+    tile.style.borderLeft = "8px black solid";
+    var uri = "movimientos/movement/" + tile.getAttribute("data-id");
     ajaxCall("GET", uri, false, true, function(response) {
-        var container = el.parentNode.parentNode.parentNode.querySelector(".movement-form");
+        var container = tile.parentNode.parentNode.parentNode.querySelector(".movement-form");
         var form = response.target.responseText;
         container.innerHTML = form;
         paperkit.initElement(container);
+        addInputsClickListener();
     });
 }
 
@@ -91,14 +99,24 @@ var help = {
 }
 
 function saveMovement() {
-    var form = document.querySelector(".page." + currentTab + " form.movement");
+    var page = document.querySelector(".page." + currentTab);
+    var form = page.querySelector("form.movement");
     var data = new FormData(form);
     var id = form.getAttribute("data-id");
     var csrf = form.getAttribute("data-csrf");
 
+
+    page.querySelector(".movements-list md-tile.open md-text").textContent = page.querySelector('md-input[name="name"]').getAttribute("value");
+
     var uri = "movimientos/save-movement/" + id;
 
     data.append("equals", form.querySelector('md-input[name="equals"]').getAttribute("data-value"));
+
+    data.append("requirements", form.querySelector('md-input[name="requirements"]').getAttribute("data-value"));
+
+    data.append("derived_from", form.querySelector('md-input[name="derived_from"]').getAttribute("data-value"));
+
+    data.append("variations", form.querySelector('md-input[name="variations"]').getAttribute("data-value"));
 
     /*
     var tagInputs = form.querySelectorAll(".input-tags");
@@ -124,6 +142,10 @@ function saveMovement() {
     */
 
     ajaxCall("POST", uri, data, true, function(response) {}, csrf);
+
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = "Movimiento guardado";
+    snackbar.animate();
 }
 
 function tabHandler(el, n) {
@@ -150,6 +172,11 @@ function addInputsClickListener() {
 // Clicks
 function inputMovementClick(event) {
     var input = event.currentTarget;
+    var currentInput = document.querySelector(".current-input");
+    if (currentInput) {
+        currentInput.classList.remove("current-input");
+    }
+    input.classList.add("current-input");
 
     paperkit.greylayer.show();
 
@@ -170,10 +197,38 @@ function inputMovementClick(event) {
         var uri = "movimientos/list";
         ajaxCall("GET", uri, false, true, function(response) {
             var view = response.target.responseText;
+            var data = input.getAttribute("data-value").split(",", -1);
+            data = data[0] !== "" ? data : [];
+
             container.innerHTML = view;
+            container.classList.add("current-input-dialog");
             paperkit.initElement(container);
+
+            data.forEach(function(id) {
+                var tile = container.querySelector("md-tile[data-id=\"" + id + "\"]");
+                tile.click();
+            });
         });
     });
+}
+
+function inputMovementSaveClick(button) {
+    var inputDialog = document.querySelector(".current-input-dialog");
+    var input = document.querySelector(".current-input");
+    var tiles = inputDialog.querySelectorAll("md-tile.selected");
+    var data = [];
+    var names = [];
+    [].forEach.call(tiles, function(tile) {
+        var id = tile.getAttribute("data-id");
+        var name = tile.querySelector("md-text").textContent;
+        var discipline = tile.getAttribute("data-discipline");
+        data.push(+id);
+        names.push(name + " [" + discipline + "]");
+    });
+    input.setAttribute("data-value", data.join(","));
+    input.setAttribute("value", names.join(", "));
+    console.log(data);
+    closeMorph();
 }
 
 function inputMovementListHandler(tile) {
@@ -187,6 +242,6 @@ function inputMovementListHandler(tile) {
 }
 
 function closeMorph() {
-    paperkit.greylayer.hide();
     transition.morphBack();
+    setTimeout(paperkit.greylayer.hide, 1000);
 }

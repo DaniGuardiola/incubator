@@ -19,3 +19,7 @@ md-input,md-input>input {
 .movement-form md-tile>md-icon,.movement-form md-tile>md-input + md-icon-button {
   margin-top: 13px;
 }
+
+md-input.input-movement, md-input.input-movement * {
+  cursor: pointer;
+}

@@ -6,8 +6,14 @@
 			</md-row>
 		</md-toolbar>
 		<md-list class="movements-list" md-action="custom: movementListHandler">
+<?php $first = true;?>
 		@foreach($movements as $movementItem)
-			<md-tile data-id="{{{ $movementItem->id }}}">
+			<md-tile class="{{{ $first ? 'open' : '' }}}" data-id="{{{ $movementItem->id }}}" style="{{{ $first ? 'border-left: 8px black solid;' : '' }}}">
+<?php
+if ($first) {
+	$first = false;
+}
+?>
 				<md-text>{{{ $movementItem->name }}}</md-text>
 				<md-icon-button class="show-parent-hover" md-image="icon: delete"></md-icon-button>
 			</md-tile>

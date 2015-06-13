@@ -79,14 +79,21 @@ class HomeController extends Controller {
 			"slug" => $rawData["slug"],
 			"category_id" => $rawData["category_id"],
 			"name" => $rawData["name"],
-			"name_variants" => explode(",", $rawData["name_variants"]),
-			"equals" => explode(",", $rawData["equals"]),
-			"tags" => explode(",", $rawData["tags"]),
+			"name_variants" => json_encode(explode(",", $rawData["name_variants"])),
+			"equals" => json_encode(array_map('intval', array_filter(explode(",", $rawData["equals"])))),
+			"tags" => json_encode(explode(",", $rawData["tags"])),
 			"history" => $rawData["history"],
 			"technique_description_text" => $rawData["technique_description_text"],
+			"requirements" => json_encode(array_map('intval', array_filter(explode(",", $rawData["requirements"])))),
+			"derived_from" => json_encode(array_map('intval', array_filter(explode(",", $rawData["derived_from"])))),
+			"variations" => json_encode(array_map('intval', array_filter(explode(",", $rawData["variations"])))),
 		];
-
 		\Log::debug(print_r($data, true));
+
+		\Log::debug(print_r($movement, true));
+		$movement->fill($data);
+		$movement->save();
+		\Log::debug(print_r($movement, true));
 	}
 
 }

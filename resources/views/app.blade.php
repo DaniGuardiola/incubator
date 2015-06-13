@@ -11,6 +11,7 @@
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body md-layout>
+	<md-snackbar id="snackbar" style="z-index: 9999;" md-action="DISMISS" md-position="bottom left"></md-snackbar>
 	<md-toolbar md-color="cyan" md-shadow="shadow-1">
 		<md-row md-type="standard">
 			@if (!Auth::guest())
