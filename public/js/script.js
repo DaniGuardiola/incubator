@@ -156,7 +156,7 @@ function inputMovementClick(event) {
     var morphHelper = document.createElement("div");
     morphHelper.id = "morph-helper";
     morphHelper.style.opacity = "0";
-    morphHelper.style.height = "700px";
+    morphHelper.style.height = "500px";
     morphHelper.style.width = "580px";
     morphHelper.style.backgroundColor = "white";
     morphHelper.style.position = "fixed";
@@ -174,6 +174,16 @@ function inputMovementClick(event) {
             paperkit.initElement(container);
         });
     });
+}
+
+function inputMovementListHandler(tile) {
+    if (tile.classList.contains("selected")) {
+        tile.classList.remove("selected");
+        tile.style.borderLeft = "";
+    } else {
+        tile.classList.add("selected");
+        tile.style.borderLeft = "4px solid black";
+    }
 }
 
 function closeMorph() {

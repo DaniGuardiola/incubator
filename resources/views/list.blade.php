@@ -13,7 +13,7 @@
 	<md-content>
 		<md-pager id="movement-list-pager">
 			<md-page>
-				<md-list>
+				<md-list md-action="custom: inputMovementListHandler">
 					@foreach($movements["parkour"] as $movement)
 					<md-tile>
 						<md-text>{{{ $movement->name }}}</md-text>
@@ -22,7 +22,7 @@
 				</md-list>
 			</md-page>
 			<md-page>
-				<md-list>
+				<md-list md-action="custom: inputMovementListHandler">
 					@foreach($movements["streetstunts"] as $movement)
 					<md-tile>
 						<md-text>{{{ $movement->name }}}</md-text>
@@ -31,7 +31,7 @@
 				</md-list>
 			</md-page>
 			<md-page>
-				<md-list>
+				<md-list md-action="custom: inputMovementListHandler">
 					@foreach($movements["tricking"] as $movement)
 					<md-tile>
 						<md-text>{{{ $movement->name }}}</md-text>
