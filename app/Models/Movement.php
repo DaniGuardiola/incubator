@@ -16,6 +16,6 @@ class Movement extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['slug', 'name', 'technique_description_text', 'discipline_id', 'history', 'equals', 'category', 'info', 'mistakes', 'technique', 'requirements', 'variations', 'progressions', 'derived_from'];
+	protected $fillable = ['slug', 'name', 'technique_description_text', 'discipline_id', 'history', 'equals', 'category', 'steps', 'mistakes', 'technique', 'requirements', 'variations', 'progressions', 'derived_from'];
 
 }

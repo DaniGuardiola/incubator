@@ -23,3 +23,18 @@ md-input,md-input>input {
 md-input.input-movement, md-input.input-movement * {
   cursor: pointer;
 }
+
+.movement-form md-list {
+	position: relative;
+}
+
+.movement-form md-tile {
+	background-color: #fff;
+	box-shadow: none;
+	transition: box-shadow 0.25s;
+}
+
+.movement-form md-tile.is-pointer-down {
+	z-index: 999;
+	box-shadow: 0 19px 38px rgba(0,0,0,.3),0 15px 12px rgba(0,0,0,.22);
+}

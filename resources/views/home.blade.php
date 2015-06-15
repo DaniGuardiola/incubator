@@ -4,6 +4,10 @@
 Movimientos
 @endsection
 
+@section('js')
+<script src="http://draggabilly.desandro.com/draggabilly.pkgd.min.js"></script>
+@endsection
+
 @section('toolbar')
 <md-space></md-space>
 <md-tabbar style="margin-top: 16px;" md-pager="main-pager" md-action="custom: tabHandler">

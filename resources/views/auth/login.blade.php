@@ -33,7 +33,7 @@ Bienvenido
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<md-row>
 							<md-tile md-width="c1">
-								<md-input id="emailfield" type="text" style="width: 100%;" placeholder="Email" name="email-false" value=""></md-input>
+								<md-input id="emailfield" type="text" style="width: 100%;" placeholder="Nombre de usuario" name="email-false" value=""></md-input>
 							</md-tile>
 						</md-row>
 						<script type="text/javascript">

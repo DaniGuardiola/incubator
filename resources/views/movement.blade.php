@@ -83,7 +83,7 @@ if ($movement->equals) {
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.steps"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-list style="width: 100%;">
+	<md-list class="numbered" name="steps" style="width: 100%;">
 <?php
 $stepcount = 1;
 $movement->steps = $movement->steps ? json_decode($movement->steps) : [];
@@ -106,10 +106,10 @@ if ($stepcount === 1) {
 $stepcount = $stepcount + 1;
 ?>
 		<md-tile>
-			<md-icon md-image="icon: drag"></md-icon>
-			<md-icon md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
+			<md-icon class="drag" md-image="icon: drag"></md-icon>
+			<md-icon class="number" md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-			<md-icon-button md-image="icon: delete"></md-icon-button>
+			<md-icon-button md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>
 		</md-tile>
 	@endforeach
 	</md-list>
@@ -121,13 +121,13 @@ $stepcount = $stepcount + 1;
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.advice"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-list style="width: 100%;">
+	<md-list name="advice" style="width: 100%;">
 <?php
 $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 ?>
 			@foreach($movement->advice as $value)
 		<md-tile>
-			<md-icon md-image="icon: drag"></md-icon>
+			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
 			<md-icon-button md-image="icon: delete"></md-icon-button>
 		</md-tile>
@@ -141,13 +141,13 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
 		</md-tile>
 	</md-row>
-	<md-list style="width: 100%;">
+	<md-list name="progressions" style="width: 100%;">
 <?php
 $movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
 ?>
 			@foreach($movement->progressions as $value)
 		<md-tile>
-			<md-icon md-image="icon: drag"></md-icon>
+			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
 			<md-icon-button md-image="icon: delete"></md-icon-button>
 		</md-tile>

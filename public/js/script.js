@@ -4,16 +4,16 @@ paperkit.init();
 var currentTab = "parkour";
 
 window.addEventListener("load", function() {
-    addInputsClickListener();
+    addInputsClickListener(document.querySelector("form"));
 });
 
 function movementListHandler(tile) {
     var last = tile.parentNode.querySelector("md-tile.open");
     if (last) {
-        last.classList.remove('open');
+        last.classList.remove("open");
         last.style.borderLeft = "";
     }
-    tile.classList.add('open');
+    tile.classList.add("open");
     tile.style.borderLeft = "8px black solid";
     var uri = "movimientos/movement/" + tile.getAttribute("data-id");
     ajaxCall("GET", uri, false, true, function(response) {
@@ -21,7 +21,7 @@ function movementListHandler(tile) {
         var form = response.target.responseText;
         container.innerHTML = form;
         paperkit.initElement(container);
-        addInputsClickListener();
+        addInputsClickListener(container);
     });
 }
 
@@ -31,11 +31,11 @@ function ajaxCall(method, uri, parameters, async, callback, csrf) {
 
     var xhr = new XMLHttpRequest();
     xhr.open(method, uri, async);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
-    if (typeof parameters == 'FormData') {
+    if (typeof parameters == "FormData") {
         xhr.setRequestHeader("Content-type", "multipart/form-data");
-    } else if (typeof parameters == 'string') {
+    } else if (typeof parameters == "string") {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     } else {}
     if (csrf) {
@@ -96,7 +96,7 @@ var help = {
     variations: function() {
         help.generic("Las variaciones del movimiento. Consulta la guía para completarlo correctamente.");
     },
-}
+};
 
 function saveMovement() {
     var page = document.querySelector(".page." + currentTab);
@@ -106,7 +106,7 @@ function saveMovement() {
     var csrf = form.getAttribute("data-csrf");
 
 
-    page.querySelector(".movements-list md-tile.open md-text").textContent = page.querySelector('md-input[name="name"]').getAttribute("value");
+    page.querySelector(".movements-list md-tile.open md-text").textContent = page.querySelector("md-input[name=\"name\"]").getAttribute("value");
 
     var uri = "movimientos/save-movement/" + id;
 
@@ -118,11 +118,20 @@ function saveMovement() {
 
     data.append("variations", form.querySelector('md-input[name="variations"]').getAttribute("data-value"));
 
-    /*
-    var tagInputs = form.querySelectorAll(".input-tags");
-    for (var i = tagInputs.length - 1; i >= 0; i--) {
-        data.append(tagInputs[i].id, getTagValues(tagInputs[i]));
+    var lists = form.querySelectorAll("md-list");
+    for (var i = lists.length - 1; i >= 0; i--) {
+        var list = lists[i];
+        var items = list.querySelectorAll("md-tile");
+
+        var output = [];
+        for (var o = 0; o < items.length; o++) {
+            output.push(items[o].querySelector("md-input").value);
+        }
+        console.log("DATA IS " + output);
+        data.append(list.getAttribute("name"), output.join("|"));
     }
+
+    /*
     var checkboxInputs = form.querySelectorAll(".input-checkbox");
     for (var i = checkboxInputs.length - 1; i >= 0; i--) {
         data.append(checkboxInputs[i].getAttribute("name"), checkboxInputs[i].getSelectedValues());
@@ -161,11 +170,41 @@ function tabHandler(el, n) {
 // FORM
 
 // Listener attacher
-function addInputsClickListener() {
+function addInputsClickListener(form) {
+    if (form.constructor === Array) {
+        for (var i = form.length - 1; i >= 0; i--) {
+            addInputsClickListener(form[i])
+        };
+    }
+    form = form;
     [].forEach.call(
-        document.querySelectorAll('.input-movement'),
+        form.querySelectorAll('.input-movement'),
         function(input) {
             input.addEventListener("click", inputMovementClick);
+        });
+    [].forEach.call(
+        form.querySelectorAll('md-list'),
+        function(list) {
+            var tiles = list.children;
+            for (var i = tiles.length - 1; i >= 0; i--) {
+                var tile = tiles[i];
+                var draggie = new Draggabilly(tile, {
+                    handle: ".drag",
+                    axis: "y",
+                    containment: list,
+                    grid: [0, 56]
+                });
+                draggie.on('dragStart', function(event, pointer) {
+                    var theTile = document.querySelector(".is-pointer-down");
+                    theTile.classList.add("last-dragged");
+                });
+
+                draggie.on('dragEnd', function(event, pointer) {
+                    var theTile = document.querySelector(".last-dragged")
+                    theTile.classList.remove("last-dragged");
+                    inputListDragEnd(theTile, list);
+                });
+            };
         });
 }
 
@@ -244,4 +283,65 @@ function inputMovementListHandler(tile) {
 function closeMorph() {
     transition.morphBack();
     setTimeout(paperkit.greylayer.hide, 1000);
+}
+
+// Lists
+function inputListDeleteClick(button) {
+    var tile = button.parentNode;
+    var list = tile.parentNode;
+    list.removeChild(tile);
+
+    if (list.classList.contains("numbered")) {
+        inputListNumbered(list);
+    }
+}
+
+function inputListNumbered(list) {
+    var items = list.children;
+    for (var i = 0; i < items.length; i++) {
+        var tile = items[i];
+        var number = i + 1;
+        if (number === 1) {
+            numberstring = "one";
+        } else if (number === 2) {
+            numberstring = "two";
+        } else if (number === 3) {
+            numberstring = "3";
+        } else if (number === 4) {
+            numberstring = "4";
+        } else if (number === 5) {
+            numberstring = "5";
+        } else {
+            numberstring = "6";
+        }
+        var image = "icon: looks_" + numberstring;
+        tile.querySelector("md-icon.number").setAttribute("md-image", image);
+    };
+}
+
+function inputListDragEnd(tile, list) {
+    var tiles = list.querySelectorAll("md-tile");
+
+    /* Get tile position */
+    var oldPosition = Array.prototype.indexOf.call(tiles, tile);
+    var position = oldPosition + (parseInt(tile.style.top) / 56);
+    if (position > oldPosition) {
+        position++;
+    }
+
+    for (var i = 0; i <= tiles.length; i++) {
+        if (i === position) {
+            list.appendChild(tile);
+        }
+        if (tiles[i] && tiles[i] !== tile) {
+            list.appendChild(tiles[i]);
+        }
+        if (tiles[i]) {
+            tiles[i].style.top = "";
+            tiles[i].style.left = "";
+        }
+    }
+    if (list.classList.contains("numbered")) {
+        inputListNumbered(list);
+    }
 }

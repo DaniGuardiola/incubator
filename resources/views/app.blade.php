@@ -9,6 +9,7 @@
 	@yield('css')
 	<link href="{{ asset('/paperkit-min/paperkit.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+	@yield('meta-js')
 </head>
 <body md-layout>
 	<md-snackbar id="snackbar" style="z-index: 9999;" md-action="DISMISS" md-position="bottom left"></md-snackbar>
@@ -64,5 +65,6 @@ $msg = $msg[mt_rand(0, count($msg) - 1)];
 	<!-- Scripts -->
 	<script src="{{ asset('/paperkit-min/paperkit.js') }}"></script>
 	<script src="{{ asset('/js/script.js') }}"></script>
+	@yield('js')
 </body>
 </html>

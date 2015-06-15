@@ -84,6 +84,7 @@ class HomeController extends Controller {
 			"tags" => json_encode(explode(",", $rawData["tags"])),
 			"history" => $rawData["history"],
 			"technique_description_text" => $rawData["technique_description_text"],
+			"steps" => json_encode(explode("|", $rawData["steps"])),
 			"requirements" => json_encode(array_map('intval', array_filter(explode(",", $rawData["requirements"])))),
 			"derived_from" => json_encode(array_map('intval', array_filter(explode(",", $rawData["derived_from"])))),
 			"variations" => json_encode(array_map('intval', array_filter(explode(",", $rawData["variations"])))),
