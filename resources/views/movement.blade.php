@@ -1,3 +1,4 @@
+@if($movement !== "none")
 <form class="movement" data-csrf="<?php echo csrf_token();?>" data-id="{{{ $movement->id }}}" md-layout md-color="white" md-shadow="shadow-1" style="border-radius: 2px;">
 	<md-row>
 		<md-tile md-width="c1">
@@ -37,7 +38,7 @@ if ($movement->equals) {
 			if ($thisMovement->discipline_id == 1) {
 				$discipline = "[Parkour]";
 			} else if ($thisMovement->discipline_id == 2) {
-				$discipline = "[Street Stunts]";
+				$discipline = "[Street stunts]";
 			} else if ($thisMovement->discipline_id == 3) {
 				$discipline = "[Tricking]";
 			}
@@ -54,7 +55,7 @@ if ($movement->equals) {
 	</md-row>
 	<md-row>
 		<md-tile md-width="c1">
-			<md-input type="text" name="tags" placeholder="Etiquetas" value="{{{ $movement->tags }}}"></md-input>
+			<md-input type="text" name="tags" placeholder="Etiquetas" value="{{{ $movement->tags ? implode(',', json_decode($movement->tags)) : '' }}}"></md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.tags"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -79,7 +80,7 @@ if ($movement->equals) {
 		<md-tile md-width="c1">
 			<span md-typo="subhead">Pasos</span>
 			<md-space></md-space>
-			<md-icon-button md-image="icon: add"></md-icon-button>
+			<md-icon-button md-action="custom: inputListAdd" data-list="steps" md-image="icon: add"></md-icon-button>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.steps"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -88,7 +89,7 @@ if ($movement->equals) {
 $stepcount = 1;
 $movement->steps = $movement->steps ? json_decode($movement->steps) : [];
 ?>
-			@foreach($movement->steps as $value)
+@foreach($movement->steps as $value)
 <?php
 if ($stepcount === 1) {
 	$stepcountstring = "one";
@@ -109,7 +110,7 @@ $stepcount = $stepcount + 1;
 			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-icon class="number" md-image="icon: looks_{{{ $stepcountstring }}}"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-			<md-icon-button md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>
 		</md-tile>
 	@endforeach
 	</md-list>
@@ -117,7 +118,7 @@ $stepcount = $stepcount + 1;
 		<md-tile md-width="c1">
 			<span md-typo="subhead">Consejos y errores comunes</span>
 			<md-space></md-space>
-			<md-icon-button md-image="icon: add"></md-icon-button>
+			<md-icon-button md-action="custom: inputListAdd" data-list="advice" md-image="icon: add"></md-icon-button>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.advice"></md-icon-button>
 		</md-tile>
 	</md-row>
@@ -129,7 +130,7 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 		<md-tile>
 			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-			<md-icon-button md-image="icon: delete"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>
 		</md-tile>
 	@endforeach
 	</md-list>
@@ -137,8 +138,8 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 		<md-tile md-width="c1">
 			<span md-typo="subhead">Progresiones</span>
 			<md-space></md-space>
-			<md-icon-button md-image="icon: add"></md-icon-button>
-			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
+			<md-icon-button md-action="custom: inputListAdd" data-list="progressions" md-image="icon: add"></md-icon-button>
+			<md-icon-button md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-list name="progressions" style="width: 100%;">
@@ -149,7 +150,7 @@ $movement->progressions = $movement->progressions ? json_decode($movement->progr
 		<md-tile>
 			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
-			<md-icon-button md-image="icon: delete"></md-icon-button>
+			<md-icon-button class="show-parent-hover" class="show-parent-hover" md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>
 		</md-tile>
 	@endforeach
 	</md-list>
@@ -162,7 +163,7 @@ if ($movement->requirements) {
 			if ($thisMovement->discipline_id == 1) {
 				$discipline = "[Parkour]";
 			} else if ($thisMovement->discipline_id == 2) {
-				$discipline = "[Street Stunts]";
+				$discipline = "[Street stunts]";
 			} else if ($thisMovement->discipline_id == 3) {
 				$discipline = "[Tricking]";
 			}
@@ -188,7 +189,7 @@ if ($movement->derived_from) {
 			if ($thisMovement->discipline_id == 1) {
 				$discipline = "[Parkour]";
 			} else if ($thisMovement->discipline_id == 2) {
-				$discipline = "[Street Stunts]";
+				$discipline = "[Street stunts]";
 			} else if ($thisMovement->discipline_id == 3) {
 				$discipline = "[Tricking]";
 			}
@@ -214,7 +215,7 @@ if ($movement->variations) {
 			if ($thisMovement->discipline_id == 1) {
 				$discipline = "[Parkour]";
 			} else if ($thisMovement->discipline_id == 2) {
-				$discipline = "[Street Stunts]";
+				$discipline = "[Street stunts]";
 			} else if ($thisMovement->discipline_id == 3) {
 				$discipline = "[Tricking]";
 			}
@@ -233,3 +234,9 @@ if ($movement->variations) {
 		</md-tile>
 	</md-row>
 </form>
+@else
+<md-paper md-padding md-shadow="shadow-1">
+	<p md-typo="display-1" md-position="text-center-x">No hay movimientos en esta disciplina</p>
+	<p md-typo="headline" md-position="text-center-x">Crea uno en el menú de la izquierda para comenzar</p>
+</md-paper>
+@endif

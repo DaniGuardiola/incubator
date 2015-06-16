@@ -5,8 +5,11 @@
 				<md-icon-button md-image="icon: add" md-action="custom: addMovement"></md-icon-button>
 			</md-row>
 		</md-toolbar>
-		<md-list class="movements-list" md-action="custom: movementListHandler">
-<?php $first = true;?>
+		<md-list data-discipline="{{{ $disciplineId }}}" class="movements-list" md-action="custom: movementListHandler">
+<?php
+$first = true;
+$movements = $movements ?: [];
+?>
 		@foreach($movements as $movementItem)
 			<md-tile class="{{{ $first ? 'open' : '' }}}" data-id="{{{ $movementItem->id }}}" style="{{{ $first ? 'border-left: 8px black solid;' : '' }}}">
 <?php
@@ -15,7 +18,7 @@ if ($first) {
 }
 ?>
 				<md-text>{{{ $movementItem->name }}}</md-text>
-				<md-icon-button class="show-parent-hover" md-image="icon: delete"></md-icon-button>
+				<md-icon-button md-action="custom: deleteMovement" class="show-parent-hover" md-image="icon: delete"></md-icon-button>
 			</md-tile>
 		@endforeach
 		</md-list>

@@ -15,14 +15,48 @@ function movementListHandler(tile) {
     }
     tile.classList.add("open");
     tile.style.borderLeft = "8px black solid";
-    var uri = "movimientos/movement/" + tile.getAttribute("data-id");
+    var uri = "movimientos/movement/" + tile.getAttribute("data-id") + "/" + tile.parentNode.getAttribute("data-discipline");
     ajaxCall("GET", uri, false, true, function(response) {
         var container = tile.parentNode.parentNode.parentNode.querySelector(".movement-form");
         var form = response.target.responseText;
         container.innerHTML = form;
         paperkit.initElement(container);
         addInputsClickListener(container);
+        var id = container.querySelector("form.movement").getAttribute("data-id");
+        if (tile.getAttribute("data-id") === "new") {
+            tile.setAttribute("data-id", id);
+        }
+        tile.querySelector("md-text").textContent = container.querySelector("form.movement md-input[name=\"name\"]").getAttribute("value");
     });
+}
+
+function deleteMovement(button) {
+    var tile = button.parentNode;
+    var list = tile.parentNode;
+    var uri = "movimientos/remove-movement/" + tile.getAttribute("data-id");
+    ajaxCall("GET", uri, false, true, function() {});
+    if (tile.classList.contains("open") && list.children.length > 1) {
+        if (tile.nextElementSibling) {
+            tile.nextElementSibling.click();
+        } else {
+            tile.previousElementSibling.click();
+        }
+    } else if (tile.classList.contains("open")) {
+        var container = tile.parentNode.parentNode.parentNode.querySelector(".movement-form");
+        container.innerHTML = '<md-paper md-padding md-shadow="shadow-1"><p md-typo="display-1" md-position="text-center-x">No hay movimientos en esta disciplina</p><p md-typo="headline" md-position="text-center-x">Crea uno en el menú de la izquierda para comenzar</p></md-paper>';
+    }
+    tile.parentNode.removeChild(tile);
+}
+
+function addMovement(button) {
+    var list = button.parentNode.parentNode.parentNode.querySelector(".movements-list");
+    var tile = list.addItem();
+    tile.innerHTML = '<md-text>Nuevo movimiento</md-text><md-icon-button md-action="custom: deleteMovement" class="show-parent-hover" md-image="icon: delete"></md-icon-button>';
+    tile.setAttribute("data-id", "new");
+    paperkit.initElement(tile);
+    list.appendChild(tile);
+    tile.removeAttribute("id");
+    tile.click();
 }
 
 function ajaxCall(method, uri, parameters, async, callback, csrf) {
@@ -187,23 +221,8 @@ function addInputsClickListener(form) {
         function(list) {
             var tiles = list.children;
             for (var i = tiles.length - 1; i >= 0; i--) {
-                var tile = tiles[i];
-                var draggie = new Draggabilly(tile, {
-                    handle: ".drag",
-                    axis: "y",
-                    containment: list,
-                    grid: [0, 56]
-                });
-                draggie.on('dragStart', function(event, pointer) {
-                    var theTile = document.querySelector(".is-pointer-down");
-                    theTile.classList.add("last-dragged");
-                });
+                inputListTileAddDrag(tiles[i]);
 
-                draggie.on('dragEnd', function(event, pointer) {
-                    var theTile = document.querySelector(".last-dragged")
-                    theTile.classList.remove("last-dragged");
-                    inputListDragEnd(theTile, list);
-                });
             };
         });
 }
@@ -319,7 +338,8 @@ function inputListNumbered(list) {
     };
 }
 
-function inputListDragEnd(tile, list) {
+function inputListDragEnd(tile) {
+    var list = tile.parentNode;
     var tiles = list.querySelectorAll("md-tile");
 
     /* Get tile position */
@@ -344,4 +364,43 @@ function inputListDragEnd(tile, list) {
     if (list.classList.contains("numbered")) {
         inputListNumbered(list);
     }
+}
+
+
+
+function inputListTileAddDrag(tile) {
+    var list = tile.parentNode;
+    var draggie = new Draggabilly(tile, {
+        handle: ".drag",
+        axis: "y",
+        containment: list,
+        grid: [0, 56]
+    });
+    draggie.on('dragStart', function(event, pointer) {
+        var theTile = document.querySelector(".is-pointer-down");
+        theTile.classList.add("last-dragged");
+    });
+
+    draggie.on('dragEnd', function(event, pointer) {
+        var theTile = document.querySelector(".last-dragged")
+        theTile.classList.remove("last-dragged");
+        inputListDragEnd(theTile);
+    });
+}
+
+function inputListAdd(button) {
+    var list = document.querySelector("md-list[name=\"" + button.getAttribute("data-list") + "\"");
+    var tile = document.createElement("md-tile");
+    var numbericon = "";
+    if (list.classList.contains("numbered")) {
+        numbericon = '<md-icon class="number" md-image="icon: looks_6"></md-icon>';
+    }
+    tile.innerHTML = '<md-icon class="drag" md-image="icon: drag"></md-icon>' + numbericon + '<md-input style="flex: 1;" type="text" value=""></md-input><md-icon-button class="show-parent-hover" md-action="custom: inputListDeleteClick" md-image="icon: delete"></md-icon-button>';
+    paperkit.initElement(tile);
+    inputListTileAddDrag(tile);
+    list.appendChild(tile);
+    if (list.classList.contains("numbered")) {
+        inputListNumbered(list);
+    }
+    tile.querySelector("md-input input").focus();
 }

@@ -50,12 +50,37 @@ class HomeController extends Controller {
 		return $movement;
 	}
 
-	public function getMovement($id) {
-		$movement = $this->getData($id);
+	public function getMovement($id, $discipline_id) {
+		if ($id === "new") {
+			$movement = new Movement;
+			$movement->discipline_id = $discipline_id;
+			$allnew = Movement::where("slug", "LIKE", "nuevo-movimiento%")->get();
+			//\Log::debug(print_r($allnew, true));
+			$numbers = [];
+			foreach ($allnew as $key => $value) {
+				$numbers[] = (int) substr($value->slug, 17);
+			}
+			\Log::debug("NUMBERS: " . print_r($numbers, true));
+			$lastone = count($numbers) > 0 ? max($numbers) : 0;
+			$lastone = $lastone ?: 0;
+			$movement->slug = "nuevo-movimiento-" . ($lastone + 1);
+			$movement->name = "Nuevo movimiento " . ($lastone + 1);
+			$movement->steps = '[""]';
+			$movement->advice = '[""]';
+			$movement->progressions = '[""]';
+			$movement->save();
+		} else {
+			$movement = $this->getData($id);
+		}
 		$args = [
 			"movement" => $movement,
 		];
 		return \View::make("movement")->with($args);
+	}
+
+	public function getRemoveMovement($id) {
+		$movement = Movement::find($id);
+		$movement->delete();
 	}
 
 	public function getList() {
@@ -85,6 +110,8 @@ class HomeController extends Controller {
 			"history" => $rawData["history"],
 			"technique_description_text" => $rawData["technique_description_text"],
 			"steps" => json_encode(explode("|", $rawData["steps"])),
+			"advice" => json_encode(explode("|", $rawData["advice"])),
+			"progressions" => json_encode(explode("|", $rawData["progressions"])),
 			"requirements" => json_encode(array_map('intval', array_filter(explode(",", $rawData["requirements"])))),
 			"derived_from" => json_encode(array_map('intval', array_filter(explode(",", $rawData["derived_from"])))),
 			"variations" => json_encode(array_map('intval', array_filter(explode(",", $rawData["variations"])))),

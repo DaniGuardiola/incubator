@@ -1,40 +1,55 @@
 .show-parent-hover {
-  display: none;
+    display: none;
 }
 
 md-tile {
-	position: relative;
+    position: relative;
 }
 
 *:hover>.show-parent-hover {
-  display: initial;
-  position: absolute;
-  right: 0;
+    display: initial;
+    position: absolute;
+    right: 0;
 }
 
-md-input,md-input>input {
-	width: 100%;
+md-input,
+md-input>input {
+    width: 100%;
 }
 
-.movement-form md-tile>md-icon,.movement-form md-tile>md-input + md-icon-button {
-  margin-top: 13px;
+.movement-form md-tile>md-icon,
+.movement-form md-tile>md-input + md-icon-button {
+    margin-top: 13px;
 }
 
-md-input.input-movement, md-input.input-movement * {
-  cursor: pointer;
+md-input.input-movement,
+md-input.input-movement * {
+    cursor: pointer;
 }
 
 .movement-form md-list {
-	position: relative;
+    position: relative;
 }
 
 .movement-form md-tile {
-	background-color: #fff;
-	box-shadow: none;
-	transition: box-shadow 0.25s;
+    background-color: #fff;
+    box-shadow: none;
+    transition: box-shadow 0.25s, background-color 0.25s;
 }
 
 .movement-form md-tile.is-pointer-down {
-	z-index: 999;
-	box-shadow: 0 19px 38px rgba(0,0,0,.3),0 15px 12px rgba(0,0,0,.22);
+    z-index: 999;
+    box-shadow: 0 10px 20px rgba(0,0,0,.19),0 6px 6px rgba(0,0,0,.23);
+    background-color: #C3C3C3; 
+    cursor: move;
+}
+
+.drag {
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.drag:active {
+    cursor: move;
 }

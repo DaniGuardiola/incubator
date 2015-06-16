@@ -23,21 +23,24 @@ Movimientos
 	<md-page style="display:flex;" class="parkour page">
 <?php
 $movements = $all['parkour'];
-$movement = $movements[0];
+$movement = count($movements) > 0 ? $movements[0] : "none";
+$disciplineId = "1";
 ?>
 	@include('panel')
 	</md-page>
 	<md-page style="display:flex;"  class="streetstunts page">
 <?php
 $movements = $all['streetstunts'];
-$movement = $movements[0];
+$movement = count($movements) > 0 ? $movements[0] : "none";
+$disciplineId = "2";
 ?>
 	@include('panel')
 	</md-page>
 	<md-page style="display:flex;"  class="tricking page">
 <?php
 $movements = $all['tricking'];
-$movement = $movements[0];
+$movement = count($movements) > 0 ? $movements[0] : "none";
+$disciplineId = "3";
 ?>
 	@include('panel')
 	</md-page>
