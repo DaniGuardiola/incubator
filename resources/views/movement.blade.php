@@ -103,10 +103,10 @@ if ($movement->equals) {
 	<md-list class="numbered" name="steps" style="width: 100%;">
 <?php
 $stepcount = 1;
-$movement->steps = $movement->steps ? json_decode($movement->steps) : [];
+//$movement->steps = $movement->steps ? json_decode($movement->steps) : [];
+$movement->steps = [$movement->steps];
 ?>
-@foreach([] as $value)
-{{{ $movement->steps }}}
+@foreach($movement->steps as $value)
 <?php
 if ($stepcount === 1) {
 	$stepcountstring = "one";
@@ -141,7 +141,8 @@ $stepcount = $stepcount + 1;
 	</md-row>
 	<md-list name="advice" style="width: 100%;">
 <?php
-$movement->advice = $movement->advice ? json_decode($movement->advice) : [];
+//$movement->advice = $movement->advice ? json_decode($movement->advice) : [];
+$movement->advice = [$movement->advice];
 ?>
 			@foreach($movement->advice as $value)
 		<md-tile>
@@ -160,11 +161,11 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 		</md-tile>
 	</md-row>
 	<md-list name="progressions" style="width: 100%;">
-{{{ $movement->progressions }}}
 <?php
-$movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
+//$movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
+$movement->progressions = [$movement->progressions];
 ?>
-			@foreach([] as $value)
+			@foreach($movement->progressions as $value)
 		<md-tile>
 			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
