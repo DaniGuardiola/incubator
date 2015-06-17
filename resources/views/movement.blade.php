@@ -160,10 +160,11 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 		</md-tile>
 	</md-row>
 	<md-list name="progressions" style="width: 100%;">
+{{{ $movement->progressions }}}
 <?php
 $movement->progressions = $movement->progressions ? json_decode($movement->progressions) : [];
 ?>
-			@foreach($movement->progressions as $value)
+			@foreach([] as $value)
 		<md-tile>
 			<md-icon class="drag" md-image="icon: drag"></md-icon>
 			<md-input style="flex: 1;" type="text" value="{{{ $value }}}"></md-input>
