@@ -44,7 +44,7 @@ if ($movement->equals) {
 			}
 			$equals[] = $thisMovement->name . " " . $discipline;
 		} else {
-			$equals[] = "[Movimiento inexistente!]";
+			$equals[] = "[Movimiento eliminado: " . $value . "]";
 		}
 	}
 }
@@ -65,11 +65,27 @@ if ($movement->equals) {
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.history"></md-icon-button>
 		</md-tile>
 	</md-row>
+
+	<!-- Discipline specific -->
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="headline" md-font-color="cyan">Específico de esta disciplina</span>
+		</md-tile>
+	</md-row>
+	@if($movement->discipline_id === "1")
+
+	@endif
+
+
+
 	<md-row>
 		<md-tile md-width="c1">
 			<span md-typo="headline" md-font-color="cyan">Técnica</span>
 		</md-tile>
 	</md-row>
+
+
+
 	<md-row>
 		<md-tile md-width="c1">
 			<textarea style="width: 100%; min-height: 128px; border: none; outline: none;" name="technique_description_text" placeholder="Descripción (que también es el guión para el vídeo)">{{{ $movement->technique_description_text }}}</textarea>
@@ -89,7 +105,8 @@ if ($movement->equals) {
 $stepcount = 1;
 $movement->steps = $movement->steps ? json_decode($movement->steps) : [];
 ?>
-@foreach($movement->steps as $value)
+@foreach([] as $value)
+{{{ $movement->steps }}}
 <?php
 if ($stepcount === 1) {
 	$stepcountstring = "one";
@@ -169,7 +186,7 @@ if ($movement->requirements) {
 			}
 			$requirements[] = $thisMovement->name . " " . $discipline;
 		} else {
-			$requirements[] = "[Movimiento inexistente!]";
+			$requirements[] = "[Movimiento eliminado: " . $value . "]";
 		}
 	}
 }
@@ -195,7 +212,7 @@ if ($movement->derived_from) {
 			}
 			$derived_from[] = $thisMovement->name . " " . $discipline;
 		} else {
-			$derived_from[] = "[Movimiento inexistente!]";
+			$derived_from[] = "[Movimiento eliminado: " . $value . "]";
 		}
 	}
 }
@@ -221,7 +238,7 @@ if ($movement->variations) {
 			}
 			$variations[] = $thisMovement->name . " " . $discipline;
 		} else {
-			$variations[] = "[Movimiento inexistente!]";
+			$variations[] = "[Movimiento eliminado: " . $value . "]";
 		}
 	}
 }
