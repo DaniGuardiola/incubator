@@ -22,9 +22,9 @@ class CreateMovementsTable extends Migration {
 			$table->string('tags');
 			$table->longText('history');
 			$table->longText('technique_description_text');
-			$table->string('steps');
-			$table->string('advice');
-			$table->string('progressions');
+			$table->longText('steps');
+			$table->longText('advice');
+			$table->longText('progressions');
 			$table->string('requirements');
 			$table->string('derived_from');
 			$table->string('variations');
