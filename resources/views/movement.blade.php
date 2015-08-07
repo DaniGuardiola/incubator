@@ -67,13 +67,80 @@ if ($movement->equals) {
 	</md-row>
 
 	<!-- Discipline specific -->
+	@if($movement->discipline_id === "1")
 	<md-row>
 		<md-tile md-width="c1">
-			<span md-typo="headline" md-font-color="cyan">Específico de esta disciplina</span>
+			<span md-typo="headline" md-font-color="cyan">Parkour</span>
 		</md-tile>
 	</md-row>
-	@if($movement->discipline_id === "1")
-
+	<md-row>
+		<md-tile md-width="c1">
+			<span>Muro</span>
+			<md-space></md-space>
+			<md-switch type="text" name="wall">{{{ $movement->history }}}</md-switch>
+			<div style="width: 64px;"></div>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.wall"></md-icon-button>
+		</md-tile>
+		<md-tile md-width="c1"></md-tile>
+	</md-row>
+	@elseif($movement->discipline_id === "2")
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="headline" md-font-color="cyan">Street stunts</span>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input type="text" name="twist" placeholder="Vueltas">{{{ $movement->history }}}</md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.twist"></md-icon-button>
+		</md-tile>
+		<md-tile md-width="c1">
+			<md-input type="text" name="spin" placeholder="Giros">{{{ $movement->history }}}</md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.spin"></md-icon-button>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<span>Un pie</span>
+			<md-space></md-space>
+			<md-switch type="text" name="one_foot">{{{ $movement->history }}}</md-switch>
+			<div style="width: 64px;"></div>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.onefoot"></md-icon-button>
+		</md-tile>
+		<md-tile md-width="c1">
+			<span>Muro</span>
+			<md-space></md-space>
+			<md-switch type="text" name="wall">{{{ $movement->history }}}</md-switch>
+			<div style="width: 64px;"></div>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.wall"></md-icon-button>
+		</md-tile>
+	</md-row>
+	@elseif($movement->discipline_id === "3")
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="headline" md-font-color="cyan">Tricking</span>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input type="text" name="twist" placeholder="Vueltas">{{{ $movement->history }}}</md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.twist"></md-icon-button>
+		</md-tile>
+		<md-tile md-width="c1">
+			<md-input type="text" name="spin" placeholder="Giros">{{{ $movement->history }}}</md-input>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.spin"></md-icon-button>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<span>Un pie</span>
+			<md-space></md-space>
+			<md-switch type="text" name="one_foot">{{{ $movement->history }}}</md-switch>
+			<div style="width: 64px;"></div>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.onefoot"></md-icon-button>
+		</md-tile>
+		<md-tile md-width="c1"></md-tile>
+	</md-row>
 	@endif
 
 
