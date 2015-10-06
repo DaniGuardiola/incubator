@@ -388,8 +388,9 @@ function inputListTileAddDrag(tile) {
     });
 }
 
-function inputListAdd(button) {
-    var list = document.querySelector("md-list[name=\"" + button.getAttribute("data-list") + "\"");
+function inputListAdd(button) {    
+    var page = document.querySelector(".page." + currentTab);
+    var list = page.querySelector("md-list[name=\"" + button.getAttribute("data-list") + "\"");
     var tile = document.createElement("md-tile");
     var numbericon = "";
     if (list.classList.contains("numbered")) {
