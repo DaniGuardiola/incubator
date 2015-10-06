@@ -90,9 +90,10 @@ if ($movement->equals) {
 	</md-row>
 
 	<!-- Discipline specific -->
+	@if($movement->discipline_id === "1")
 	<md-row>
 		<md-tile md-width="c1">
-			<span md-typo="headline" md-font-color="cyan">Específico de esta disciplina</span>
+			<span md-typo="headline" md-font-color="cyan">Parkour</span>
 		</md-tile>
 	</md-row>
 <?php 
@@ -114,6 +115,7 @@ $specific =  $movement->specific ? json_decode($movement->specific) : [];
 		</md-tile>
 		<md-tile md-width="c1">
 			<md-input type="number" name="spin" placeholder="Número de vueltas" value="{{{  array_key_exists('spin', $specific) ? $specific->spin  : '' }}}"></md-input>
+
 		</md-tile>
 	</md-row>
 	<md-row>
