@@ -22,6 +22,11 @@ md-input>input {
     margin-top: 13px;
 }
 
+.movement-form md-icon-button[md-image="icon: help"] {
+    border: 20px red solid;
+    display: none !important;
+}
+
 md-input.input-movement,
 md-input.input-movement * {
     cursor: pointer;

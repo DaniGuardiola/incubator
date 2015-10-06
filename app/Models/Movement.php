@@ -25,6 +25,7 @@ class Movement extends Model {
 		'equals',
 		'tags',
 		'history',
+		'specific',
 		'technique_description_text',
 		'steps',
 		'advice',

@@ -1,5 +1,5 @@
 @if($movement !== "none")
-<form class="movement" data-csrf="<?php echo csrf_token();?>" data-id="{{{ $movement->id }}}" md-layout md-color="white" md-shadow="shadow-1" style="border-radius: 2px;">
+<form class="movement" data-csrf="<?php echo csrf_token();?>" data-id="{{{ $movement->id }}}" data-discipline="{{{ $movement->discipline_id }}}" md-layout md-color="white" md-shadow="shadow-1" style="border-radius: 2px;">
 	<md-row>
 		<md-tile md-width="c1">
 			<span md-typo="headline" md-font-color="cyan">Información</span>
@@ -11,8 +11,31 @@
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.slug"></md-icon-button>
 		</md-tile>
 		<md-tile style="width: auto;">
-			<md-input style="margin-left: 16px; margin-top: 8px;" type="select" name="category_id" value="{{{ $movement->category_id ?: 1 }}}">
-				<option value="1">Sin categoría</option>
+			<md-input style="margin-left: 16px; margin-top: 8px;" type="select" name="category" value="{{{ $movement->category ?: 0 }}}">
+			@if($movement->discipline_id === "1")
+				<option value="0">Sin categoría</option>
+				<option value="1">Recepciones</option>
+				<option value="2">Pasamuros o grimpeos</option>
+				<option value="3">Saltos de distancia</option>
+				<option value="4">Enlace de movimientos</option>
+			@elseif($movement->discipline_id === "2")
+				<option value="0">Sin categoría</option>
+				<option value="1">De pared</option>
+				<option value="2">Desde altura</option>
+				<option value="3">Salida de barra o muro</option>
+			@elseif($movement->discipline_id === "3")
+				<option value="0">Sin categoría</option>
+				<option value="1">Kick: básicas</option>
+				<option value="2">Kick: cheat</option>
+				<option value="3">Kick: pop</option>
+				<option value="4">Kick: backsides</option>
+				<option value="5">Mortales</option>
+				<option value="6">B Kicks</option>
+				<option value="7">Aerials</option>
+				<option value="8">Gainers</option>
+				<option value="9">Raíz</option>
+				<option value="10">Transiciones</option>
+			@endif
 			</md-input>
 			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.category"></md-icon-button>
 		</md-tile>
@@ -72,8 +95,56 @@ if ($movement->equals) {
 			<span md-typo="headline" md-font-color="cyan">Específico de esta disciplina</span>
 		</md-tile>
 	</md-row>
+<?php 
+$specific =  $movement->specific ? json_decode($movement->specific) : [];
+?>
 	@if($movement->discipline_id === "1")
-
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="subhead">Muro</span>
+			<md-space></md-space>
+			<md-switch name="wall" value="{{{  array_key_exists('wall', $specific) && $specific->wall ? 'on' : 'off' }}}"></md-switch>
+		</md-tile>
+		<md-tile md-width="c1"></md-tile>
+	</md-row>
+	@elseif($movement->discipline_id === "2")
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input type="number" name="twist" placeholder="Número de giros" value="{{{  array_key_exists('twist', $specific) ? $specific->twist  : '' }}}"></md-input>
+		</md-tile>
+		<md-tile md-width="c1">
+			<md-input type="number" name="spin" placeholder="Número de vueltas" value="{{{  array_key_exists('spin', $specific) ? $specific->spin  : '' }}}"></md-input>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="subhead">Un pie</span>
+			<md-space></md-space>
+			<md-switch name="onefoot" value="{{{  array_key_exists('onefoot', $specific) && $specific->onefoot ? 'on' : 'off' }}}"></md-switch>
+		</md-tile>
+		<md-tile md-width="c1">
+			<span md-typo="subhead">Muro</span>
+			<md-space></md-space>
+			<md-switch name="wall" value="{{{  array_key_exists('wall', $specific) && $specific->wall ? 'on' : 'off' }}}"></md-switch>
+		</md-tile>
+	</md-row>
+	@elseif($movement->discipline_id === "3")
+	<md-row>
+		<md-tile md-width="c1">
+			<md-input type="number" name="twist" placeholder="Número de giros" value="{{{  array_key_exists('twist', $specific) ? $specific->twist  : '' }}}"></md-input>
+		</md-tile>
+		<md-tile md-width="c1">
+			<md-input type="number" name="spin" placeholder="Número de vueltas" value="{{{  array_key_exists('spin', $specific) ? $specific->spin  : '' }}}"></md-input>
+		</md-tile>
+	</md-row>
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="subhead">Un pie</span>
+			<md-space></md-space>
+			<md-switch name="onefoot" value="{{{  array_key_exists('onefoot', $specific) && $specific->onefoot ? 'on' : 'off' }}}"></md-switch>
+		</md-tile>
+		<md-tile md-width="c1"></md-tile>
+	</md-row>
 	@endif
 
 
@@ -155,7 +226,7 @@ $movement->advice = $movement->advice ? json_decode($movement->advice) : [];
 			<span md-typo="subhead">Progresiones</span>
 			<md-space></md-space>
 			<md-icon-button md-action="custom: inputListAdd" data-list="progressions" md-image="icon: add"></md-icon-button>
-			<md-icon-button md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
+			<md-icon-button class="show-parent-hover" md-image="icon: help" md-action="custom: help.progressions"></md-icon-button>
 		</md-tile>
 	</md-row>
 	<md-list name="progressions" style="width: 100%;">
@@ -190,6 +261,19 @@ if ($movement->requirements) {
 	}
 }
 ?>
+
+
+
+
+	<md-row>
+		<md-tile md-width="c1">
+			<span md-typo="headline" md-font-color="cyan">Relaciones</span>
+		</md-tile>
+	</md-row>
+
+
+
+
 	<md-row>
 		<md-tile md-width="c1" style="cursor: pointer;">
 			<md-input class="input-movement" disabled type="text" name="requirements" placeholder="Requisitos" value="{{{ implode(', ', $requirements) }}}" data-value="{{{ $movement->requirements ? implode(',', json_decode($movement->requirements)) : "" }}}"></md-input>

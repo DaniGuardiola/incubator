@@ -15,7 +15,7 @@ class CreateMovementsTable extends Migration {
 			$table->increments('id');
 			$table->string('discipline_id');
 			$table->string('slug')->unique();
-			$table->string('category_id');
+			$table->string('category');
 			$table->string('name');
 			$table->string('name_variants');
 			$table->string('equals');
@@ -25,6 +25,7 @@ class CreateMovementsTable extends Migration {
 			$table->longText('steps');
 			$table->longText('advice');
 			$table->longText('progressions');
+			$table->longText('specific');
 			$table->string('requirements');
 			$table->string('derived_from');
 			$table->string('variations');

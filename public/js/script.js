@@ -132,6 +132,22 @@ var help = {
     },
 };
 
+function getSpecificData(encode) {
+    var page = document.querySelector(".page." + currentTab);
+    var form = page.querySelector("form.movement");
+    var discipline = form.getAttribute("data-discipline");
+    var data = {};
+    if (discipline === "1" || discipline === "2") {
+        data.wall = form.querySelector("[name=\"wall\"]").getAttribute("value") === "on" ? true : false;
+    }
+    if (discipline === "2" || discipline === "3") {
+        data.onefoot = form.querySelector("[name=\"onefoot\"]").getAttribute("value") === "on" ? true : false;
+        data.twist = form.querySelector("[name=\"twist\"]").value;
+        data.spin = form.querySelector("[name=\"spin\"]").value;
+    }
+    return encode ? JSON.stringify(data) : data;
+}
+
 function saveMovement() {
     var page = document.querySelector(".page." + currentTab);
     var form = page.querySelector("form.movement");
@@ -143,6 +159,10 @@ function saveMovement() {
     page.querySelector(".movements-list md-tile.open md-text").textContent = page.querySelector("md-input[name=\"name\"]").getAttribute("value");
 
     var uri = "movimientos/save-movement/" + id;
+
+    data.append("category", form.querySelector('md-input[name="category"]').getAttribute("value"));
+
+    data.append("specific", getSpecificData(true));
 
     data.append("equals", form.querySelector('md-input[name="equals"]').getAttribute("data-value"));
 

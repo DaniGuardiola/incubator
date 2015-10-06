@@ -102,12 +102,13 @@ class HomeController extends Controller {
 
 		$data = [
 			"slug" => $rawData["slug"],
-			"category_id" => $rawData["category_id"],
+			"category" => $rawData["category"],
 			"name" => $rawData["name"],
 			"name_variants" => json_encode(explode(",", $rawData["name_variants"])),
 			"equals" => json_encode(array_map('intval', array_filter(explode(",", $rawData["equals"])))),
 			"tags" => json_encode(explode(",", $rawData["tags"])),
 			"history" => $rawData["history"],
+			"specific" => $rawData["specific"],
 			"technique_description_text" => $rawData["technique_description_text"],
 			"steps" => json_encode(explode("|", $rawData["steps"])),
 			"advice" => json_encode(explode("|", $rawData["advice"])),
